@@ -1,0 +1,7 @@
+services:
+  fast_api:
+    image: new_fast_api
+    container_name: fast_api
+    ports:
+      - "80:80"
+    restart: unless-stopped
