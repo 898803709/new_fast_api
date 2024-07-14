@@ -23,5 +23,5 @@ fi
 
 if [[ "$CHECK" == "all"  || "$CHECK" == "lint" || "$CHECK" == "flake8" ]]; then
     echo "Pythonコードスタイルのチェック中(flake8)..."
-    poetry run flake8 api tests
+    poetry run flake8 --config=scripts/.flake8 api tests
 fi
