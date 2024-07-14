@@ -23,4 +23,4 @@ RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
 COPY ./api /app/api
 
 # Set the default command to run the application using Uvicorn, an ASGI server
-CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
