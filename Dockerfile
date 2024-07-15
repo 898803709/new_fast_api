@@ -14,13 +14,12 @@ ENV PATH="/root/.local/bin:$PATH"
 COPY pyproject.toml* poetry.lock* ./
 
 # Configure Poetry to create virtual environments inside the project directory
-RUN poetry config virtualenvs.in-project true
+RUN poetry config virtualenvs.create false --local \
+    && poetry config virtualenvs.in-project false --local
 
 # Install the dependencies listed in pyproject.toml, if the file exists
 RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
 
-# Copy the contents of the local api directory to the /app/api directory in the container
-COPY ./api /app/api
 
 # Set the default command to run the application using Uvicorn, an ASGI server
-CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--reload"]
