@@ -1,7 +1,9 @@
 services:
   fast_api:
-    image: new_fast_api
+    build: .
+    volumes:
+      - ./api:/app/api
     container_name: fast_api
     ports:
-      - "80:80"
+      - "8000:8000"
     restart: unless-stopped
