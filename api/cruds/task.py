@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.engine import Result
@@ -9,14 +9,14 @@ import api.schemas.task as task_schema
 
 
 async def create_task(db: AsyncSession, task_create: task_schema.TaskCreate) -> task_model.Task:
-    task = task_model.Task(**task_create.dict())
+    task = task_model.Task(**task_create.model_dump())
     db.add(task)
     await db.commit()
     await db.refresh(task)
     return task
 
 
-async def get_tasks_with_done(db: AsyncSession) -> List[Tuple[int, str, bool]]:
+async def get_tasks_with_done(db: AsyncSession):
     result: Result = await db.execute(
         select(
             task_model.Task.id,
@@ -29,7 +29,7 @@ async def get_tasks_with_done(db: AsyncSession) -> List[Tuple[int, str, bool]]:
 
 async def get_task(db: AsyncSession, task_id: int) -> Optional[task_model.Task]:
     result: Result = await db.execute(select(task_model.Task).filter(task_model.Task.id == task_id))
-    task: Optional[Tuple[task_model.Task]] = result.first()
+    task = result.first()
     return task[0] if task is not None else None  # 要素が一つであってもtupleで返却されるので１つ目の要素を取り出す
 
 
