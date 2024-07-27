@@ -1,9 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel, Field
-
+from sqlalchemy import Column
 
 class TaskBase(BaseModel):
-    title: Optional[str] = Field(None, examples=["クリーニングを取りに行く"])
+    title: Column[str] = Field(None, examples=["クリーニングを取りに行く"])
 
 
 class TaskCreate(TaskBase):
