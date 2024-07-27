@@ -1,9 +1,7 @@
-from typing import Optional
-
-from sqlalchemy import select
+from typing import Any, Sequence, Optional
+from sqlalchemy import select, Row
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
-
 import api.models.task as task_model
 import api.schemas.task as task_schema
 
@@ -16,7 +14,7 @@ async def create_task(db: AsyncSession, task_create: task_schema.TaskCreate) -> 
     return task
 
 
-async def get_tasks_with_done(db: AsyncSession):
+async def get_tasks_with_done(db: AsyncSession) -> Sequence[Row[Any]]:
     result: Result = await db.execute(
         select(
             task_model.Task.id,
