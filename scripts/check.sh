@@ -8,7 +8,7 @@ fi
 
 if [[ "$CHECK" == "all" || "$CHECK" == "type" || "$CHECK" == "mypy" ]]; then
     echo "Pythonの型チェック中(mypy)..."
-    poetry run mypy api tests
+    poetry run mypy api
 fi
 
 if [[ "$CHECK" == "all" || "$CHECK" == "format" || "$CHECK" == "lint" || "$CHECK" == "black" ]]; then

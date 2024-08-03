@@ -7,3 +7,15 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # rootアカウントをパスワードなしで作成
+      MYSQL_DATABASE: 'demo'  # 初期データベースとしてdemoを設定
+      TZ: 'Asia/Tokyo'  # タイムゾーンを日本時間に設定
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 33306:3306  # ホストマシンのポート33306を、docker内のポート3306に接続する
+volumes:
+  mysql_data:
